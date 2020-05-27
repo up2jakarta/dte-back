@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<hibernate-mapping xmlns="http://www.hibernate.org/xsd/orm/hbm">
+
+<!-- JPA BTN View -->
+<database-object>
+<create>
+    <![CDATA[
+    CREATE VIEW dte_jpa_btn AS
+    SELECT btn_id, btn_type, btn_label, btn_negated, btn_shared, btn_desc, btn_script, btn_tpl_id, btn_grp_id
+        FROM dte_btn
+        WHERE btn_type IN ('C', 'S', 'T')
+    UNION ALL
+    SELECT dtn_id, dtn_type, dtn_label, dtn_negated, dtn_shared, dtn_desc, dtn_script, dtn_tpl_id, dtn_grp_id
+        FROM dte_dtn
+        WHERE dtn_type = 'B'
+    ]]>
+</create>
+<drop><![CDATA[DROP VIEW IF EXISTS dte_jpa_btn]]></drop>
+<dialect-scope name="org.hibernate.dialect.H2Dialect"/>
+</database-object>
+
+<!-- JPA BIP View -->
+<database-object>
+<create>
+    <![CDATA[
+    CREATE VIEW dte_jpa_bip AS
+    SELECT bip_btn_id, btn_type AS bip_type, bip_name, bip_tpe_id
+        FROM dte_btn
+        INNER JOIN dte_bip ON bip_btn_id = btn_id
+        WHERE btn_type IN ('C', 'S', 'T')
+    UNION ALL
+    SELECT dip_dtn_id, dtn_type, dip_name, dip_tpe_id
+        FROM dte_dtn
+        INNER JOIN dte_dip ON dip_dtn_id = dtn_id
+        WHERE dtn_type = 'B'
+    ]]>
+</create>
+<drop><![CDATA[DROP VIEW IF EXISTS dte_jpa_bip]]></drop>
+<dialect-scope name="org.hibernate.dialect.H2Dialect"/>
+</database-object>
+
+<!-- JPA Group View -->
+<database-object>
+<create>
+    <![CDATA[
+    CREATE VIEW dte_jpa_grp AS
+    SELECT grp_id AS grp_pid, grp_id AS grp_did FROM dte_grp
+    UNION ALL
+    SELECT grp_id, grp_parent_id FROM dte_grp WHERE grp_type IN ('S', 'G')
+    UNION ALL
+    SELECT g.grp_id, s.grp_parent_id FROM dte_grp g INNER JOIN dte_grp s ON s.grp_id = g.grp_parent_id
+        WHERE g.grp_type = 'G'
+    ]]>
+</create>
+<drop><![CDATA[DROP VIEW IF EXISTS dte_jpa_grp]]></drop>
+<dialect-scope name="org.hibernate.dialect.H2Dialect"/>
+</database-object>
+
+</hibernate-mapping>

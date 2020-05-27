@@ -1,0 +1,22 @@
+moduleName=groovy-dte
+moduleVersion=@{project.version}
+extensionClasses=io.github.up2jakarta.dte.dsl.ext.time.InstantExtension\
+  ,io.github.up2jakarta.dte.dsl.ext.time.ZoneIdExtension\
+  ,io.github.up2jakarta.dte.dsl.ext.time.ZoneOffsetExtension\
+  ,io.github.up2jakarta.dte.dsl.ext.time.DurationExtension\
+  ,io.github.up2jakarta.dte.dsl.ext.time.PeriodExtension\
+  ,io.github.up2jakarta.dte.dsl.ext.time.ZonedDateTimeExtension\
+  ,io.github.up2jakarta.dte.dsl.ext.time.OffsetDateTimeExtension\
+  ,io.github.up2jakarta.dte.dsl.ext.time.OffsetTimeExtension\
+  ,io.github.up2jakarta.dte.dsl.ext.time.LocalDateExtension\
+  ,io.github.up2jakarta.dte.dsl.ext.time.LocalTimeExtension\
+  ,io.github.up2jakarta.dte.dsl.ext.time.LocalDateTimeExtension\
+  ,io.github.up2jakarta.dte.dsl.ext.time.YearMonthExtension\
+  ,io.github.up2jakarta.dte.dsl.ext.time.MonthExtension\
+  ,io.github.up2jakarta.dte.dsl.ext.time.MonthDayExtension\
+  ,io.github.up2jakarta.dte.dsl.ext.time.YearExtension\
+  ,io.github.up2jakarta.dte.dsl.ext.time.DayOfWeekExtension\
+  \
+  ,io.github.up2jakarta.dte.dsl.ext.NumberExtension\
+  ,io.github.up2jakarta.dte.dsl.ext.IntegerExtension
+staticExtensionClasses=io.github.up2jakarta.dte.dsl.ext.time.StaticParserExtension

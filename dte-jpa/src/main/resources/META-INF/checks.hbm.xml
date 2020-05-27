@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<hibernate-mapping xmlns="http://www.hibernate.org/xsd/orm/hbm">
+
+    <!-- Decider check constraints -->
+    <database-object>
+        <create><![CDATA[
+    ALTER TABLE dte_btn ADD CONSTRAINT dte_btn_type_cc CHECK (btn_type IN('S', 'C', 'L', 'P', 'T'));
+    ALTER TABLE dte_btn ADD CONSTRAINT dte_btn_operator_cc CHECK (
+        btn_operator IN('O', 'A', 'X') AND (
+            (btn_type IN ('C', 'P') AND btn_operator IS NOT NULL) OR (btn_type NOT IN ('C', 'P') AND btn_operator IS NULL)
+        )
+    );
+    ALTER TABLE dte_btn ADD CONSTRAINT dte_btn_grp_cc CHECK (
+        (btn_type IN ('C', 'S', 'T') AND btn_grp_id IS NOT NULL) OR (btn_type NOT IN ('C', 'S', 'T') AND btn_grp_id IS NULL)
+    );
+    ALTER TABLE dte_btn ADD CONSTRAINT dte_btn_tpl_cc CHECK (
+        (btn_type IN ('S', 'T') AND btn_tpl_id IS NOT NULL) OR (btn_type NOT IN ('S', 'T') AND btn_tpl_id IS NULL)
+    );
+    ALTER TABLE dte_btn ADD CONSTRAINT dte_btn_parent_cc CHECK (
+        (btn_type NOT IN ('S', 'C') AND btn_parent_id IS NOT NULL) OR (btn_type IN ('S', 'C') AND btn_parent_id IS NULL)
+    );
+    ALTER TABLE dte_btn ADD CONSTRAINT dte_btn_root_cc CHECK (
+        (btn_type NOT IN ('S', 'C') AND btn_root_id IS NOT NULL) OR (btn_type IN ('S', 'C') AND btn_root_id IS NULL)
+    );
+    ALTER TABLE dte_btn ADD CONSTRAINT dte_btn_shared_cc CHECK (
+        (btn_type IN ('C', 'S', 'T') AND btn_shared IS NOT NULL) OR (btn_type NOT IN ('C', 'S', 'T') AND btn_shared IS NULL)
+    );
+    ALTER TABLE dte_btn ADD CONSTRAINT dte_btn_order_cc CHECK (
+        (btn_type IN ('S', 'C') AND btn_order IS NULL) OR (
+            btn_type NOT IN ('S', 'C') AND btn_order IS NOT NULL AND btn_order >= 0
+        )
+    );
+    ALTER TABLE dte_btn ADD CONSTRAINT dte_btn_depth_cc CHECK (
+        (btn_type = 'S' AND btn_depth IS NULL) OR
+        (btn_type = 'C' AND btn_depth = 0) OR
+        (btn_type NOT IN ('S', 'C') AND btn_depth IS NOT NULL AND btn_depth > 0)
+    );
+    ALTER TABLE dte_btn ADD CONSTRAINT dte_btn_desc_cc CHECK (
+        (btn_type IN ('L', 'P') AND btn_desc IS NULL) OR btn_type NOT IN ('L', 'P')
+    );
+    ALTER TABLE dte_btn ADD CONSTRAINT dte_btn_script_cc CHECK (
+        (btn_type IN ('S', 'T') AND btn_script IS NOT NULL) OR (btn_type NOT IN ('S', 'T') AND btn_script IS NULL)
+    );
+    ALTER TABLE dte_btn ADD CONSTRAINT dte_btn_btn_cc CHECK (
+        (btn_type = 'L' AND btn_btn_id IS NOT NULL) OR (btn_type <> 'L' AND btn_btn_id IS NULL)
+    );
+        ]]></create>
+        <drop><![CDATA[]]></drop>
+        <dialect-scope name="org.hibernate.dialect.H2Dialect"/>
+        <dialect-scope name="org.hibernate.dialect.PostgreSQL95Dialect"/>
+    </database-object>
+
+    <!-- Computer check constraints -->
+    <database-object>
+        <create><![CDATA[
+    ALTER TABLE dte_dtn ADD CONSTRAINT dte_dtn_type_cc CHECK (dtn_type IN('S', 'C', 'E', 'D', 'R', 'T', 'B'));
+    ALTER TABLE dte_dtn ADD CONSTRAINT dte_dtn_grp_cc CHECK (
+        (dtn_type IN ('S', 'C', 'T', 'B') AND dtn_grp_id IS NOT NULL) OR (dtn_type NOT IN ('S', 'C', 'T', 'B') AND dtn_grp_id IS NULL)
+    );
+    ALTER TABLE dte_dtn ADD CONSTRAINT dte_dtn_tpl_cc CHECK (
+        (dtn_type IN ('S', 'T', 'B') AND dtn_tpl_id IS NOT NULL) OR (dtn_type NOT IN ('S', 'T', 'B') AND dtn_tpl_id IS NULL)
+    );
+    ALTER TABLE dte_dtn ADD CONSTRAINT dte_dtn_parent_cc CHECK (
+        (dtn_type NOT IN ('S', 'C') AND dtn_parent_id IS NOT NULL) OR (dtn_type IN ('S', 'C') AND dtn_parent_id IS NULL)
+    );
+    ALTER TABLE dte_dtn ADD CONSTRAINT dte_dtn_root_cc CHECK (
+        (dtn_type NOT IN ('S', 'C') AND dtn_root_id IS NOT NULL) OR (dtn_type IN ('S', 'C') AND dtn_root_id IS NULL)
+    );
+    ALTER TABLE dte_dtn ADD CONSTRAINT dte_dtn_desc_cc CHECK (
+        (dtn_type IN ('E', 'D', 'R') AND dtn_desc IS NULL) OR dtn_type NOT IN ('E', 'D', 'R')
+    );
+    ALTER TABLE dte_dtn ADD CONSTRAINT dte_dtn_depth_cc CHECK (
+        (dtn_type = 'S' AND dtn_depth IS NULL) OR
+        (dtn_type = 'C' AND dtn_depth = 0) OR
+        (dtn_type NOT IN ('S', 'C') AND dtn_depth IS NOT NULL  AND dtn_depth > 0)
+    );
+    ALTER TABLE dte_dtn ADD CONSTRAINT dte_dtn_order_cc CHECK (
+        (dtn_type IN ('S', 'C') AND dtn_order IS NULL) OR (dtn_type NOT IN ('S', 'C') AND dtn_order IS NOT NULL AND dtn_order >= 0)
+    );
+    ALTER TABLE dte_dtn ADD CONSTRAINT dte_dtn_script_cc CHECK (
+        (dtn_type IN ('S', 'T', 'B') AND dtn_script IS NOT NULL) OR (dtn_type NOT IN ('S', 'T', 'B') AND dtn_script IS NULL)
+    );
+    ALTER TABLE dte_dtn ADD CONSTRAINT dte_dtn_btn_cc CHECK (
+        (dtn_type = 'D' AND DTN_BTN_ID IS NOT NULL) OR (dtn_type <> 'D' AND DTN_BTN_ID IS NULL)
+    );
+    ALTER TABLE dte_dtn ADD CONSTRAINT dte_dtn_dtn_cc CHECK (
+        (dtn_type = 'R' AND DTN_DTN_ID IS NOT NULL) OR (dtn_type <> 'R' AND DTN_DTN_ID IS NULL)
+    );
+    ALTER TABLE dte_dtn ADD CONSTRAINT dte_dtn_negated_cc CHECK (
+        (dtn_type IN ('D', 'B') AND dtn_negated IS NOT NULL) OR (dtn_type NOT IN ('D', 'B') AND dtn_negated IS NULL)
+    );
+    ALTER TABLE dte_dtn ADD CONSTRAINT dte_dtn_shared_cc CHECK (
+        (dtn_type IN ('C', 'S', 'T', 'B') AND dtn_shared IS NOT NULL) OR (dtn_type NOT IN ('C', 'S', 'T', 'B') AND dtn_shared IS NULL)
+    );
+        ]]></create>
+        <drop><![CDATA[]]></drop>
+        <dialect-scope name="org.hibernate.dialect.H2Dialect"/>
+        <dialect-scope name="org.hibernate.dialect.PostgreSQL95Dialect"/>
+    </database-object>
+
+</hibernate-mapping>

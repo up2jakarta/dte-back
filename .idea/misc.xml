@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="EntryPointsManager">
+    <list size="21">
+      <item index="0" class="java.lang.String" itemvalue="com.fasterxml.jackson.annotation.JsonCreator" />
+      <item index="1" class="java.lang.String" itemvalue="javax.persistence.Column" />
+      <item index="2" class="java.lang.String" itemvalue="javax.persistence.Entity" />
+      <item index="3" class="java.lang.String" itemvalue="javax.persistence.PersistenceContext" />
+      <item index="4" class="java.lang.String" itemvalue="javax.validation.OverridesAttribute" />
+      <item index="5" class="java.lang.String" itemvalue="javax.validation.constraints.AssertTrue" />
+      <item index="6" class="java.lang.String" itemvalue="org.junit.Before" />
+      <item index="7" class="java.lang.String" itemvalue="org.springframework.beans.factory.annotation.Autowired" />
+      <item index="8" class="java.lang.String" itemvalue="org.springframework.context.annotation.Bean" />
+      <item index="9" class="java.lang.String" itemvalue="org.springframework.context.annotation.Configuration" />
+      <item index="10" class="java.lang.String" itemvalue="org.springframework.stereotype.Component" />
+      <item index="11" class="java.lang.String" itemvalue="org.springframework.stereotype.Repository" />
+      <item index="12" class="java.lang.String" itemvalue="org.springframework.stereotype.Service" />
+      <item index="13" class="java.lang.String" itemvalue="org.springframework.web.bind.annotation.DeleteMapping" />
+      <item index="14" class="java.lang.String" itemvalue="org.springframework.web.bind.annotation.ExceptionHandler" />
+      <item index="15" class="java.lang.String" itemvalue="org.springframework.web.bind.annotation.GetMapping" />
+      <item index="16" class="java.lang.String" itemvalue="org.springframework.web.bind.annotation.PostMapping" />
+      <item index="17" class="java.lang.String" itemvalue="org.springframework.web.bind.annotation.PutMapping" />
+      <item index="18" class="java.lang.String" itemvalue="org.springframework.web.bind.annotation.RequestMapping" />
+    </list>
+    <writeAnnotations>
+      <writeAnnotation name="org.springframework.beans.factory.annotation.Autowired" />
+      <writeAnnotation name="javax.persistence.PersistenceContext" />
+      <writeAnnotation name="org.springframework.beans.factory.annotation.Value" />
+      <writeAnnotation name="javax.persistence.Id" />
+      <writeAnnotation name="javax.persistence.Column" />
+      <writeAnnotation name="javax.persistence.JoinColumn" />
+      <writeAnnotation name="javax.persistence.OneToMany" />
+      <writeAnnotation name="javax.persistence.EmbeddedId" />
+    </writeAnnotations>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

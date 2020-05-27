@@ -1,0 +1,163 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.up2jakarta</groupId>
+        <artifactId>up2dte-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>app-dbm</artifactId>
+    <packaging>jar</packaging>
+
+    <name>DTE :: DBM Application</name>
+    <description>Application for data base migration</description>
+
+    <properties>
+        <!-- Avoid SQL injections -->
+        <maven.build.timestamp.format>ddMMyyyyHHmmss</maven.build.timestamp.format>
+        <flyway.scripts.path>scripts-${maven.build.timestamp}</flyway.scripts.path>
+        <flyway.version>5.0.7</flyway.version>
+        <!-- Free Flyway -->
+        <spring.boot.version>2.0.9.RELEASE</spring.boot.version>
+    </properties>
+
+    <dependencies>
+        <!-- Modules -->
+        <dependency>
+            <groupId>io.github.up2jakarta</groupId>
+            <artifactId>dte-cfg</artifactId>
+            <classifier>resources</classifier>
+            <scope>provided</scope>
+            <type>zip</type>
+        </dependency>
+        <!-- Logging -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+        </dependency>
+        <!-- DataSource -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources/scripts/</directory>
+                <targetPath>${project.build.outputDirectory}/${flyway.scripts.path}</targetPath>
+                <filtering>false</filtering>
+                <includes>
+                    <include>V*.sql</include>
+                    <include>R*.sql</include>
+                    <include>U*.sql</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources/</directory>
+                <targetPath>${project.build.outputDirectory}</targetPath>
+                <filtering>true</filtering>
+                <includes>
+                    <include>logback.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${project.cfg.path}/main</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>dbc.properties</include>
+                    <include>dbm.properties</include>
+                    <include>banner.txt</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <!-- Maven dependency -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>conf-unpack</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>io.github.up2jakarta</groupId>
+                                    <artifactId>dte-cfg</artifactId>
+                                    <classifier>resources</classifier>
+                                    <type>zip</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${project.cfg.path}</outputDirectory>
+                            <overWriteReleases>true</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Spring Boot -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+                <configuration>
+                    <mainClass>io.github.up2jakarta.dte.dbm.MigrationApplication</mainClass>
+                    <workingDirectory>${project.build.directory}</workingDirectory>
+                    <additionalProperties>
+                        <spring.banner.location>classpath:banner.txt</spring.banner.location>
+                    </additionalProperties>
+                    <excludes>
+                        <exclude>
+                            <groupId>io.github.up2jakarta</groupId>
+                            <artifactId>cfg</artifactId>
+                            <classifier>resources</classifier>
+                        </exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <site>
+            <id>${project.artifactId}</id>
+            <name>${project.name}</name>
+            <url>${project.site.url}</url>
+        </site>
+    </distributionManagement>
+
+</project>

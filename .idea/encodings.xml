@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app-dbm/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app-dbm/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app-dbm/src/main/resources/scripts" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app-dbm/target/dte/main" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app-web/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app-web/target/dte/main" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dte-cfg" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dte-cfg/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dte-cfg/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dte-jpa" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dte-jpa/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dte-jpa/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/up2app-dbm" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/up2app-dbm/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/up2app-dbm/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/up2app-dbm/src/main/resources/scripts" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/up2app-dbm/target/dte/main" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/up2dte-dsl" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/up2dte-dsl/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/up2dte-dsl/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/up2dte-engine" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/up2dte-engine/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/up2dte-engine/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/up2dte-exe/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/up2dte-exe/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration scan="true" scanPeriod="30 seconds">
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %-20.20logger{20}.%-15.15M{15} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- TRACE | DEBUG | INFO | WARN | ERROR | FATAL | OFF -->
+    <root level="ERROR">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <!-- DTE -->
+    <logger name="io.github.up2jakarta.dte.web.config.ExceptionHandlerAdvice" level="OFF"/>
+    <logger name="io.github.up2jakarta.dte.exe" level="OFF"/>
+
+    <!-- Spring -->
+    <logger name="org.springframework" level="OFF"/>
+    <logger name="org.springframework.boot" level="OFF"/>
+    <!-- Hibernate -->
+    <logger name="org.hibernate" level="OFF"/>
+    <logger name="org.hibernate.SQL" level="OFF"/>
+    <logger name="org.hibernate.type" level="OFF"/>
+
+</configuration>

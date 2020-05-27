@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration scan="false">
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>
+                %d{dd-MM-yyyy HH:mm:ss.SSS} %highlight(%-5level) %logger{24}.%M - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- TRACE | DEBUG | INFO | WARN | ERROR | FATAL | OFF -->
+    <root level="@{log.default.level}">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <!-- Spring -->
+    <logger name="org.springframework" level="OFF"/>
+    <logger name="org.flywaydb.core.internal.command" level="INFO"/>
+
+</configuration>

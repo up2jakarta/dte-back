@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration scan="false">
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>
+                %d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{24}.%M - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- TRACE | DEBUG | INFO | WARN | ERROR | FATAL | OFF -->
+    <root level="@{log.default.level}">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <!-- DTE -->
+    <logger name="io.github.up2jakarta.dte.web.WebApiApplication" level="INFO"/>
+    <logger name="io.github.up2jakarta.dte" level="@{log.dte.level}"/>
+    <logger name="io.github.up2jakarta.dte.exe" level="@{log.engine.level}"/>
+
+    <!-- Spring -->
+    <logger name="org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices" level="OFF"/>
+    <logger name="org.hibernate.engine.jdbc.spi.SqlExceptionHelper" level="OFF"/>
+    <logger name="org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer" level="OFF"/>
+    <logger name="org.springframework.batch.core.launch.support.SimpleJobLauncher" level="OFF"/>
+    <logger name="org.hibernate.engine.jdbc.spi.SqlExceptionHelper" level="OFF"/>
+
+    <!-- SQL -->
+    <logger name="org.hibernate.SQL" level="@{log.sql.level}"/>
+    <logger name="org.hibernate.type" level="@{log.sql.level}"/>
+    <logger name="org.springframework.orm.jpa.JpaTransactionManager" level="@{log.sql.level}"/>
+    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="OFF"/>
+
+</configuration>

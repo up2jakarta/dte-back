@@ -1,0 +1,617 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.github.up2jakarta</groupId>
+    <artifactId>up2dte-parent</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <name>DTE :: Parent</name>
+    <description>Business rules engine based on decision trees</description>
+    <url>https://github.com/up2jakarta/dte-back</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git://github.com/up2jakarta/dte-back.git</connection>
+        <developerConnection>scm:git:ssh://github.com/up2jakarta/dte-back.git</developerConnection>
+        <url>https://github.com/up2jakarta/dte-back.git</url>
+    </scm>
+
+    <modules>
+        <module>up2dte-dsl</module>
+        <module>up2dte-exe</module>
+        <module>dte-cfg</module>
+        <module>dte-jpa</module>
+        <module>app-dbm</module>
+        <module>app-web</module>
+    </modules>
+
+    <properties>
+        <!-- Project properties -->
+        <project.java.version>1.8</project.java.version>
+        <project.maven.version>3.3.0</project.maven.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.site.path>${project.build.directory}/site</project.site.path>
+        <project.site.url>file://${project.site.path}</project.site.url>
+        <project.cfg.path>${project.build.directory}/dte</project.cfg.path>
+
+        <!-- Developer section -->
+        <dte.developer.name>A.ABBESSI</dte.developer.name>
+        <dte.developer.email>up2Abbessi@gmail.com</dte.developer.email>
+        <dte.developer.role>JAVA Software Architect</dte.developer.role>
+
+        <!-- Plugins properties -->
+        <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
+        <maven.test.skip>false</maven.test.skip>
+
+        <!-- Plugins versions -->
+        <plugin.jacoco.version>0.8.2</plugin.jacoco.version>
+        <plugin.surefire.version>2.22.1</plugin.surefire.version>
+        <plugin.site.version>3.8.2</plugin.site.version>
+        <plugin.git.version>4.9.10</plugin.git.version>
+        <plugin.resources.version>3.1.0</plugin.resources.version>
+        <plugin.jar.version>3.1.2</plugin.jar.version>
+        <plugin.report.version>3.0.0</plugin.report.version>
+        <plugin.javadoc.version>3.1.0</plugin.javadoc.version>
+        <plugin.checkstyle.version>3.1.0</plugin.checkstyle.version>
+        <plugin.pmd.version>3.12.0</plugin.pmd.version>
+        <plugin.compiler.version>3.8.1</plugin.compiler.version>
+        <plugin.war.version>3.2.3</plugin.war.version>
+        <plugin.enforcer.version>3.2.1</plugin.enforcer.version>
+        <plugin.assembly.version>3.7.1</plugin.assembly.version>
+        <plugin.dependency.version>3.1.2</plugin.dependency.version>
+        <plugin.hibernate.version>5.4.12.Final</plugin.hibernate.version>
+
+        <!-- Dependencies versions -->
+        <spring.boot.version>2.2.13.RELEASE</spring.boot.version>
+        <groovy.version>2.5.23</groovy.version>
+        <swagger.version>2.9.2</swagger.version>
+
+        <!-- Default config for DTE DB Connexion -->
+        <dte.dbc.host>localhost</dte.dbc.host>
+        <dte.dbc.port>5432</dte.dbc.port>
+        <dte.dbc.name>dte</dte.dbc.name>
+        <dte.dbc.schema>dte</dte.dbc.schema>
+        <dte.dbc.user>dte</dte.dbc.user>
+        <dte.dbc.password>PASS_word</dte.dbc.password>
+
+        <!-- Default DTE log levels -->
+        <log.default.level>WARN</log.default.level>
+        <log.dte.level>WARN</log.dte.level>
+        <log.engine.level>WARN</log.engine.level>
+        <log.sql.level>OFF</log.sql.level>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- DTE Modules -->
+            <dependency>
+                <groupId>io.github.up2jakarta</groupId>
+                <artifactId>up2dte-dsl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.up2jakarta</groupId>
+                <artifactId>up2dte-exe</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.up2jakarta</groupId>
+                <artifactId>dte-jpa</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.up2jakarta</groupId>
+                <artifactId>dte-cfg</artifactId>
+                <classifier>resources</classifier>
+                <version>${project.version}</version>
+                <type>zip</type>
+            </dependency>
+            <!-- Spring -->
+            <dependency>
+                <!-- Import dependency management from Spring Boot -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-jdbc</artifactId>
+                <version>${spring.boot.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.zaxxer</groupId>
+                        <artifactId>HikariCP</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-jpa</artifactId>
+                <version>${spring.boot.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.zaxxer</groupId>
+                        <artifactId>HikariCP</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${spring.boot.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-logging</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.yaml</groupId>
+                        <artifactId>snakeyaml</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security.oauth.boot</groupId>
+                <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            <!-- Swagger -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <!-- Groovy -->
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy</artifactId>
+                <version>${groovy.version}</version>
+            </dependency>
+            <!-- Byte buddy -->
+            <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy</artifactId>
+                <version>1.10.10</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- Spring Boot -->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring.boot.version}</version>
+                </plugin>
+                <!-- Maven enforcer -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${plugin.enforcer.version}</version>
+                </plugin>
+                <!-- Maven WAR -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>${plugin.war.version}</version>
+                </plugin>
+                <!-- Maven compiler -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${plugin.compiler.version}</version>
+                </plugin>
+                <!-- Maven surefire report -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-report-plugin</artifactId>
+                    <version>${plugin.surefire.version}</version>
+                </plugin>
+                <!-- Git info -->
+                <plugin>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>${plugin.git.version}</version>
+                </plugin>
+                <!-- Maven Resources -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${plugin.resources.version}</version>
+                </plugin>
+                <!-- Maven Surefire -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${plugin.surefire.version}</version>
+                </plugin>
+                <!-- Maven Jar -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${plugin.jar.version}</version>
+                </plugin>
+                <!-- Jacoco -->
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${plugin.jacoco.version}</version>
+                </plugin>
+                <!-- Maven Site -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${plugin.site.version}</version>
+                </plugin>
+                <!-- Project info report -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>${plugin.report.version}</version>
+                </plugin>
+                <!-- Java Doc -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${plugin.javadoc.version}</version>
+                </plugin>
+                <!-- Checkstyle -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${plugin.checkstyle.version}</version>
+                </plugin>
+                <!-- PMD -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>${plugin.pmd.version}</version>
+                </plugin>
+                <!-- Maven Assembly -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${plugin.assembly.version}</version>
+                </plugin>
+                <!-- Maven dependency -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${plugin.dependency.version}</version>
+                </plugin>
+                <!-- Hibernate Enhancer -->
+                <plugin>
+                    <groupId>org.hibernate.orm.tooling</groupId>
+                    <artifactId>hibernate-enhance-maven-plugin</artifactId>
+                    <version>${plugin.hibernate.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <!-- Maven enforcer -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-versions</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>${project.maven.version}</version>
+                                </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <version>${project.java.version}</version>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Jacoco -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+                    <skip>${maven.test.skip}</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>pre-unit-test</id>
+                        <phase>process-test-classes</phase>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <!-- Maven Jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            <addClasspath>false</addClasspath>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <!-- Maven Surefire -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <parallel>classes</parallel>
+                    <threadCount>4</threadCount>
+                    <forkCount>0.5C</forkCount>
+                    <reuseForks>true</reuseForks>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/*Tests.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+            <!-- Maven Resources -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>jpg</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>ico</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>jpeg</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>gif</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>bmp</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>png</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>svg</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                    <escapeWindowsPaths>true</escapeWindowsPaths>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <useDefaultDelimiters>false</useDefaultDelimiters>
+                    <delimiters>
+                        <delimiter>@{*}</delimiter>
+                    </delimiters>
+                </configuration>
+            </plugin>
+            <!-- Maven compiler -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${project.java.version}</source>
+                    <target>${project.java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <useIncrementalCompilation>false</useIncrementalCompilation>
+                </configuration>
+            </plugin>
+            <!-- Maven Site -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <configuration>
+                    <outputDirectory>${project.site.path}</outputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-descriptor</id>
+                        <goals>
+                            <goal>attach-descriptor</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <!-- Project info reports -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <inherited>true</inherited>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>index</report>
+                            <report>team</report>
+                            <report>modules</report>
+                            <report>licenses</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <profiles>
+        <!-- Skip Tests -->
+        <profile>
+            <id>skipTests</id>
+            <activation>
+                <property>
+                    <name>skipTests</name>
+                </property>
+            </activation>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+        </profile>
+        <!-- Jenkins: ENV PROD like -->
+        <profile>
+            <id>jenkins</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>jenkins</value>
+                </property>
+            </activation>
+            <properties>
+                <!-- DTE DB Connexion -->
+                <!--suppress UnresolvedMavenProperty -->
+                <dte.dbc.host>${DTE_DBC_HOST}</dte.dbc.host>
+                <!--suppress UnresolvedMavenProperty -->
+                <dte.dbc.port>${DTE_DBC_PORT}</dte.dbc.port>
+                <!--suppress UnresolvedMavenProperty -->
+                <dte.dbc.name>${DTE_DBC_NAME}</dte.dbc.name>
+                <!--suppress UnresolvedMavenProperty -->
+                <dte.dbc.schema>${DTE_DBC_SCHEMA}</dte.dbc.schema>
+                <!--suppress UnresolvedMavenProperty -->
+                <dte.dbc.user>${DTE_DBC_USERNAME}</dte.dbc.user>
+                <!--suppress UnresolvedMavenProperty -->
+                <dte.dbc.password>${DTE_DBC_PASSWORD}</dte.dbc.password>
+                <!-- DTE log levels -->
+                <log.default.level>WARN</log.default.level>
+                <log.dte.level>WARN</log.dte.level>
+                <log.engine.level>WARN</log.engine.level>
+                <log.sql.level>OFF</log.sql.level>
+            </properties>
+        </profile>
+        <!-- Release -->
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <failOnWarnings>false</failOnWarnings>
+                            <failOnError>false</failOnError>
+                            <detectOfflineLinks>false</detectOfflineLinks>
+                            <show>public</show>
+                            <quiet>true</quiet>
+                            <doclint>none</doclint>
+                            <jdkToolchain>
+                                <version>${java.version}</version>
+                            </jdkToolchain>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <!-- mvn decrypt:decrypt -N -P release (target/pass.txt) -->
+                            <!-- gpg-agent - -daemon & gpg-agent -v -->
+                            <keyname>${gpg.key.name}</keyname>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.davidmoten</groupId>
+                        <artifactId>decrypt-maven-plugin</artifactId>
+                        <version>0.1.3</version>
+                        <configuration>
+                            <serverId>${gpg.key.name}</serverId>
+                            <outputFile>${project.build.directory}/pass.txt</outputFile>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>0.9.0</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <excludeArtifacts>
+                                <excludeArtifact>app-dbm</excludeArtifact>
+                                <excludeArtifact>app-web</excludeArtifact>
+                                <excludeArtifact>dte-cfg</excludeArtifact>
+                                <excludeArtifact>dte-jpa</excludeArtifact>
+                            </excludeArtifacts>
+                            <publishingServerId>ossrh</publishingServerId>
+                            <waitUntil>published</waitUntil>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+	
+	<developers>
+        <developer>
+            <id>aab</id>
+            <name>${dte.developer.name}</name>
+            <email>${dte.developer.email}</email>
+            <roles>
+                <role>${dte.developer.role}</role>
+            </roles>
+            <url>https://up2jakarta.github.io/</url>
+            <organization>Freelancer</organization>
+        </developer>
+    </developers>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+</project>

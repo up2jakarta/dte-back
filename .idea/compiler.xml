@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="app-dbm" />
+        <module name="up2dte-exe" />
+        <module name="app-web" />
+        <module name="up2dte-dsl" />
+        <module name="dte-jpa" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="api" target="1.8" />
+      <module name="cfg" target="1.8" />
+      <module name="conf" target="1.8" />
+      <module name="core" target="1.8" />
+      <module name="dbm" target="1.8" />
+      <module name="dte-parent" target="1.8" />
+      <module name="jpa" target="1.8" />
+      <module name="up2app-dbm" target="1.8" />
+      <module name="up2dte-engine" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="GreclipseSettings">
+    <option name="greclipsePath" value="$MAVEN_REPOSITORY$/org/codehaus/groovy/groovy-eclipse-batch/2.4.3-01/groovy-eclipse-batch-2.4.3-01.jar" />
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="api" options="" />
+      <module name="dbm" options="" />
+    </option>
+  </component>
+</project>

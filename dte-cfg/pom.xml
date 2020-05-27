@@ -1,0 +1,50 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.up2jakarta</groupId>
+        <artifactId>up2dte-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>dte-cfg</artifactId>
+    <packaging>pom</packaging>
+
+    <name>DTE :: Configuration</name>
+    <description>Shared configuration module</description>
+
+    <build>
+        <plugins>
+            <!-- Maven Assembly -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/resources.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>resources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <site>
+            <id>${project.artifactId}</id>
+            <name>${project.name}</name>
+            <url>${project.site.url}</url>
+        </site>
+    </distributionManagement>
+
+</project>
